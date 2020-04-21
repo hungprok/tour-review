@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const Author = require('./src/models/author.js');
 const {createAuthor, updateAuthor, deleteAuthor, readAuthor} = require('./src/controllers/authorController');
 const {createGenre, updateGenre, deleteGenre, readGenre} = require('./src/controllers/genreController');
-const {createBook, readBook} = require('./src/controllers/bookController')
+const {createBook, readBook, updateBook} = require('./src/controllers/bookController')
 
 
 mongoose.connect(process.env.DB_LOCAL, {
@@ -43,8 +43,8 @@ router.route('/genres')
 // router.post('/authors',createAuthor )
 
 router.route('/books')
-.post(createBook )
-// .put(updateAuthor)
+.post(createBook)
+.put(updateBook)
 .get(readBook)
 // .delete(deleteAuthor);
 
