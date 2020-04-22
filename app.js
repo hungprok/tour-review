@@ -5,7 +5,10 @@ const bodyParser = require("body-parser");
 const Author = require('./src/models/author.js');
 const {createAuthor, updateAuthor, deleteAuthor, readAuthor} = require('./src/controllers/authorController');
 const {createGenre, updateGenre, deleteGenre, readGenre} = require('./src/controllers/genreController');
-const {createBook, readBook, updateBook} = require('./src/controllers/bookController')
+const {createBook, readBook, updateBook} = require('./src/controllers/bookController');
+const {createUser} = require('./src/controllers/userController');
+const {Login} = require('./src/controllers/authencationController')
+
 
 
 mongoose.connect(process.env.DB_LOCAL, {
@@ -47,6 +50,12 @@ router.route('/books')
 .put(updateBook)
 .get(readBook)
 // .delete(deleteAuthor);
+
+router.route('/users')
+.post(createUser)
+
+router.route('/login')
+.post(Login)
 
 app.listen(process.env.PORT, () => {
     console.log("running in port", process.env.PORT)
