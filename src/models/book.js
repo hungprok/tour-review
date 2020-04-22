@@ -9,8 +9,11 @@ const bookSchema = mongoose.Schema({
         type: String,
         required: [true, "Title is required."],
         trim: true
-    }
-
+    },
+    owner: {
+        type: Object,
+        required: [true, "Book must have an owner"]
+      }
 })
 
 bookSchema.pre('save', async function (next) {

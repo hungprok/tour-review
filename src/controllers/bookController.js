@@ -1,6 +1,5 @@
 const Book = require('../models/book');
 
-
 exports.createBook = async (req, res) => {
     const { title, genres, author } = req.body;
 
@@ -12,7 +11,12 @@ exports.createBook = async (req, res) => {
     const book = new Book ({
         author: author,
         genre: genres,
-        title: title
+        title: title,
+        owner: {
+          _id: req.user._id,
+          name: req.user.name,
+          email: req.user.email
+        }
     })
     await book.save();
     return res.status(200).json({ status: "ok", data: book })
@@ -21,8 +25,13 @@ exports.createBook = async (req, res) => {
 
 
 exports.readBook = async (req, res) => {
-    const book = await Book.find();
-    return res.status(200).json({ status: "ok", data: book })
+
+  try {
+    const books = await Book.find({ "owner._id": req.user._id });
+    res.json({ status: "success", data: books });
+  } catch (error) {
+    res.status(400).json({ status: "fail", message: error.message });
+  };
 };
 
 exports.updateBook = async (req, res) => {
@@ -31,7 +40,7 @@ exports.updateBook = async (req, res) => {
       const book = await Book.findById(req.body.id);
       const fields = Object.keys(req.body);
 
-      // eliminate id field
+      // eliminate id field, actually, it's okay if u leave it there 'cause it's the same id
       const newFields = fields.filter(el => el !== 'id')
       newFields.map(field => book[field] = req.body[field]);
       await book.save();

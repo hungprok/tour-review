@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 var validator = require('validator');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-var jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
 const userSchema = mongoose.Schema({
     name: {

@@ -7,9 +7,8 @@ const {createAuthor, updateAuthor, deleteAuthor, readAuthor} = require('./src/co
 const {createGenre, updateGenre, deleteGenre, readGenre} = require('./src/controllers/genreController');
 const {createBook, readBook, updateBook} = require('./src/controllers/bookController');
 const {createUser} = require('./src/controllers/userController');
-const {Login} = require('./src/controllers/authencationController')
-
-
+const {Login, auth} = require('./src/controllers/authencationController');
+const {Logout, LogoutAll} = require('./src/controllers/LogoutController')
 
 mongoose.connect(process.env.DB_LOCAL, {
     useCreateIndex: true,
@@ -46,9 +45,9 @@ router.route('/genres')
 // router.post('/authors',createAuthor )
 
 router.route('/books')
-.post(createBook)
-.put(updateBook)
-.get(readBook)
+.post(auth, createBook)
+.put(auth, updateBook)
+.get(auth, readBook)
 // .delete(deleteAuthor);
 
 router.route('/users')
@@ -56,6 +55,12 @@ router.route('/users')
 
 router.route('/login')
 .post(Login)
+
+router.route('/logout')
+.get(auth, Logout)
+
+router.route('/logoutAll')
+.get(auth, LogoutAll)
 
 app.listen(process.env.PORT, () => {
     console.log("running in port", process.env.PORT)
