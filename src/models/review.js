@@ -9,12 +9,12 @@ const reviewSchema = new mongoose.Schema({
     content: {
         type: String,
         required: [true, "Review must have content"],
-        minlength: 10
+        minlength: 5
     },
-    bookId: {
+    TourId: {
         type: String,
-        ref: "Book",
-        required: [true, "Review must belong to a book"]
+        ref: "Tour",
+        required: [true, "Review must belong to a tour"]
     },
     username: {
         type: String,

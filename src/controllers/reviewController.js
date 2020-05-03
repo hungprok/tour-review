@@ -1,14 +1,12 @@
 const Review = require('../models/review');
-const Book = require('../models/book');
 
 exports.createReview = async function (req, res) {
-    const { content } = req.body;
+    const {content} = req.body;
     try {
         const review = await Review.create({
             content: content,
             user: req.user._id,
-            bookId: req.bookId,
-            bookname: req.bookname,
+            TourId: req.TourId,
             username: req.user.name
         })
         return res.status(200).json({ status: "ok", data: review });
@@ -19,19 +17,19 @@ exports.createReview = async function (req, res) {
 };
 
 exports.readReview = async function (req, res) {
-    const { bookId } = req.body;
+    const { tourId } = req.body;
     try {
 
-        const book = await Book.findById(req.body.bookId).populate('reviews', '-user -__v -createdAt -updatedAt');
+        const tour = await tour.findById(req.body.tourId).populate('reviews', '-user -__v -createdAt -updatedAt');
 
-        // const abc = book.reviews.map(item => {
-        //     Object.defineProperty(item, 'bookId', { configurable: true });
+        // const abc = tour.reviews.map(item => {
+        //     Object.defineProperty(item, 'tourId', { configurable: true });
         //     console.log(item);
-        //     // delete item.bookId;
+        //     // delete item.tourId;
         // })
         // console.log(abc);
 
-        return res.status(200).json({ status: "ok", data: book });
+        return res.status(200).json({ status: "ok", data: tour });
     }
     catch (err) {
         return res.status(500).json({ status: "failed", error: err.message });
