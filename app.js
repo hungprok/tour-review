@@ -8,7 +8,9 @@ const {createGenre, updateGenre, deleteGenre, readGenre} = require('./src/contro
 const {createBook, readBook, updateBook} = require('./src/controllers/bookController');
 const {createUser} = require('./src/controllers/userController');
 const {Login, auth} = require('./src/controllers/authencationController');
-const {Logout, LogoutAll} = require('./src/controllers/LogoutController')
+const {Logout, LogoutAll} = require('./src/controllers/LogoutController');
+const {createReview, readReview} = require('./src/controllers/reviewController');
+const {checkBook} = require('./src/middleware/checkBook');
 
 mongoose.connect(process.env.DB_LOCAL, {
     useCreateIndex: true,
@@ -26,9 +28,9 @@ app.use(bodyParser.json());
 app.use(router);
 
 
-router.get('/', (req, res) => {
-    res.status(200).json({ status: "ok", data: [] })
-})
+// router.get('/', (req, res) => {
+//     res.status(200).json({ status: "ok", data: [] })
+// })
 
 router.route('/authors')
 .post(createAuthor )
@@ -52,6 +54,10 @@ router.route('/books')
 
 router.route('/users')
 .post(createUser)
+
+router.route('/reviews')
+.post(auth, checkBook, createReview)
+.get(auth, checkBook, readReview)
 
 router.route('/login')
 .post(Login)

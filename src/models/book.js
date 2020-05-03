@@ -14,7 +14,18 @@ const bookSchema = mongoose.Schema({
         type: Object,
         required: [true, "Book must have an owner"]
       }
-})
+      
+},{
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
+});
+
+bookSchema.virtual ('reviews', {
+    ref: 'Review',
+    localField: '_id',
+    foreignField: 'bookId'
+});
 
 bookSchema.pre('save', async function (next) {
     this.author = await Author.findById(this.author);
