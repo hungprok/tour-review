@@ -8,7 +8,7 @@ const {createGenre, updateGenre, deleteGenre, readGenre} = require('./src/contro
 const {createBook, readBook, updateBook} = require('./src/controllers/bookController');
 const {createUser} = require('./src/controllers/userController');
 const {Login, auth} = require('./src/controllers/authencationController');
-const {Logout, LogoutAll} = require('./src/controllers/LogoutController');
+const {Logout, LogoutAll} = require('./src/controllers/logoutController');
 const {createReview, readReview} = require('./src/controllers/reviewController');
 const {checkBook} = require('./src/middleware/checkBook');
 
